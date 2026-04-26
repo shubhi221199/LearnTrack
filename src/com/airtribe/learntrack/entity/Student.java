@@ -11,16 +11,20 @@ package com.airtribe.learntrack.entity;
 //                                                                 slightly advanced)
 
 
-public class Student {
-    static int id;
-    String firstName;
-    String lastName;
-    String email;
-    String batch;
-    boolean active;
+public class Student extends Person {
+    //    static int id;
+//    private String firstName;
+//    private String lastName;
+//    private String email;
+    private String batch;
+    private boolean active;
 
-    Student(){
 
+    Student(int id, String firstName, String lastName, String email, String batch, boolean active) {
+        super(id, firstName, lastName, email);
+        this.batch = batch;
+        this.active = active;
     }
+
 
 }
