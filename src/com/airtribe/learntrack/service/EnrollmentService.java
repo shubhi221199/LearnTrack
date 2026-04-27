@@ -15,11 +15,12 @@ public class EnrollmentService {
 
     private List<Enrollment> enrollmentList = new ArrayList<>();
 
-    public void enrollStudent(int studentId, int courseId, String enrollmentDate, EnrollmentStatus status) {
+    public void enrollStudent(int studentId, int courseId, String enrollmentDate) {
         int id = IdGenerator.getNextEnrollmentId();
 
         Enrollment e = new Enrollment(id, studentId, courseId, enrollmentDate, EnrollmentStatus.ACTIVE);
         enrollmentList.add(e);
+
         System.out.println("Enrollment successful. ID: " + id);
     }
 

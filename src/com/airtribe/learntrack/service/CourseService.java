@@ -2,6 +2,7 @@ package com.airtribe.learntrack.service;
 
 import com.airtribe.learntrack.entity.Course;
 import com.airtribe.learntrack.entity.Student;
+import com.airtribe.learntrack.exception.EntityNotFoundException;
 import com.airtribe.learntrack.util.IdGenerator;
 
 import java.util.ArrayList;
@@ -11,10 +12,20 @@ public class CourseService {
 
     private List<Course> courses = new ArrayList<>();
 
-    public void addCourse(String courseName, String description, int durationInWeeks, boolean active) {
+    public void addCourse(String courseName, String description, int durationInWeeks) {
         int id = IdGenerator.getNextCourseId();
-        Course c = new Course(id, courseName, description, durationInWeeks, active);
+        Course c = new Course(id, courseName, description, durationInWeeks, true);
         courses.add(c);
+    }
+
+    public Course findCourseById(int id) throws EntityNotFoundException {
+        for (Course c : courses) {
+            if (c.getCourseId() == id) {
+                return c;
+
+            }
+        }
+        throw new EntityNotFoundException("Course not found" + id);
     }
 
     public void listCourses() {
@@ -24,11 +35,11 @@ public class CourseService {
         }
 
         for (Course c : courses) {
-            System.out.println(c.getCourseId() + " | " + c.getCourseName() + " " + c.getDescription() + " | " + c.getDurationInWeeks()+" | " + c.isActive());
+            System.out.println(c.getCourseId() + " | " + c.getCourseName() + " " + c.getDescription() + " | " + c.getDurationInWeeks() + " | " + c.isActive());
         }
     }
 
-    public void statusChange (int id){
+    public void statusChange(int id) {
 
         for (Course c : courses) {
             if (c.getCourseId() == id) {

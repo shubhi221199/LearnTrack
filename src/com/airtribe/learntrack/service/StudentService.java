@@ -12,9 +12,9 @@ public class StudentService {
 
     private List<Student> students = new ArrayList<>();
 
-    public void addStudent(String firstName, String lastName, String email, String batch, boolean active) {
+    public void addStudent(String firstName, String lastName, String email, String batch) {
         int id = IdGenerator.getNextStudentId();
-        Student s = new Student(id, firstName, lastName, email, batch, active);
+        Student s = new Student(id, firstName, lastName, email, batch, true);
         students.add(s);
 
     }
@@ -25,17 +25,14 @@ public class StudentService {
         students.remove(s);
     }
 
-    public void updateStudent(int id, String firstName, String lastName, String email, String batch, boolean active) {
-        for (Student std : students) {
-            if (std.getId() == id) {
-                std.setFirstName(firstName);
-                std.setLastName(lastName);
-                std.setEmail(email);
-                std.setBatch(batch);
-                std.setActive(active);
+    public void updateStudent(int id, String firstName, String lastName, String email, String batch, boolean active) throws EntityNotFoundException {
 
-            }
-        }
+        Student s = findStudentById(id);
+        s.setFirstName(firstName);
+        s.setLastName(lastName);
+        s.setEmail(email);
+        s.setBatch(batch);
+        s.setActive(active);
     }
 
     public void statusChange(int id) {
