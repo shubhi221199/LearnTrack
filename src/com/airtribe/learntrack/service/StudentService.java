@@ -2,6 +2,7 @@ package com.airtribe.learntrack.service;
 
 import com.airtribe.learntrack.entity.Course;
 import com.airtribe.learntrack.entity.Student;
+import com.airtribe.learntrack.exception.EntityNotFoundException;
 import com.airtribe.learntrack.util.IdGenerator;
 
 import java.util.ArrayList;
@@ -19,12 +20,9 @@ public class StudentService {
     }
 
 
-    public void removeStudent(int id) {
-        for (Student std : students) {
-            if (std.getId() == id) {
-                students.remove(std);
-            }
-        }
+    public void removeStudent(int id) throws EntityNotFoundException {
+        Student s = findStudentById(id);
+        students.remove(s);
     }
 
     public void updateStudent(int id, String firstName, String lastName, String email, String batch, boolean active) {
@@ -40,7 +38,7 @@ public class StudentService {
         }
     }
 
-    public void statusChange (int id){
+    public void statusChange(int id) {
 
         for (Student c : students) {
             if (c.getId() == id) {
@@ -50,6 +48,15 @@ public class StudentService {
         }
     }
 
+    public Student findStudentById(int id) throws EntityNotFoundException {
+        for (Student s : students) {
+            if (s.getId() == id) {
+                return s;
+            }
+        }
+        throw new EntityNotFoundException("Student not found with id: " + id);
+    }
+
     public void listStudents() {
         if (students.isEmpty()) {
             System.out.println("No students available");
@@ -57,7 +64,7 @@ public class StudentService {
         }
 
         for (Student s : students) {
-            System.out.println(s.getId() + " | " + s.getFirstName() + " " + s.getLastName() + " | " + s.getEmail() + " | " + s.getBatch()+ " | " + s.isActive());
+            System.out.println(s.getId() + " | " + s.getFirstName() + " " + s.getLastName() + " | " + s.getEmail() + " | " + s.getBatch() + " | " + s.isActive());
         }
     }
 }

@@ -17,25 +17,23 @@ public class Enrollment {
     }
 
     //GETTER
-    public int getId(int id){
+    public int getId(){
         return id;
     }
-    public int getStudentId(int studentId){
+    public int getStudentId(){
         return studentId;
     }
-    public int getCourseId(int courseId){
+    public int getCourseId(){
         return courseId;
     }
-    public String getEnrollmentDate(String enrollmentDate){
+    public String getEnrollmentDate(){
         return enrollmentDate;
     }
-    public EnrollmentStatus getStatus(EnrollmentStatus status) {
+    public EnrollmentStatus getStatus() {
         return status;
     }
 
 //    SETTER
-
-
     public void setId(int id) {
         this.id = id;
     }
