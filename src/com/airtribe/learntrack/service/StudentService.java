@@ -10,7 +10,7 @@ import java.util.List;
 
 public class StudentService {
 
-    private List<Student> students = new ArrayList<>();
+    List<Student> students = new ArrayList<>();
 
     public void addStudent(String firstName, String lastName, String email, String batch) {
         int id = IdGenerator.getNextStudentId();
@@ -19,6 +19,13 @@ public class StudentService {
 
     }
 
+    public void addStudent(String firstName, String lastName) {
+        // default values
+        String defaultEmail = "N/A";
+        String defaultBatch = "General";
+
+        addStudent(firstName, lastName, defaultEmail, defaultBatch);
+    }
 
     public void removeStudent(int id) throws EntityNotFoundException {
         Student s = findStudentById(id);

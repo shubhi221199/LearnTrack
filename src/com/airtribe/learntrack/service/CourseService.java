@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CourseService {
 
-    private List<Course> courses = new ArrayList<>();
+     List<Course> courses = new ArrayList<>();
 
     public void addCourse(String courseName, String description, int durationInWeeks) {
         int id = IdGenerator.getNextCourseId();
@@ -25,7 +25,7 @@ public class CourseService {
 
             }
         }
-        throw new EntityNotFoundException("Course not found" + id);
+        throw new EntityNotFoundException("Course not found " + id);
     }
 
     public void listCourses() {

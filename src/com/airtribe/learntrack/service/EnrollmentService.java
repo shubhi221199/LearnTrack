@@ -1,7 +1,7 @@
 package com.airtribe.learntrack.service;
 
 import com.airtribe.learntrack.entity.Enrollment;
-import com.airtribe.learntrack.entity.EnrollmentStatus;
+import com.airtribe.learntrack.enums.EnrollmentStatus;
 import com.airtribe.learntrack.exception.EntityNotFoundException;
 import com.airtribe.learntrack.util.IdGenerator;
 
@@ -13,7 +13,7 @@ public class EnrollmentService {
 //    View enrollments for a student
 //    Mark enrollment as completed/cancelled
 
-    private List<Enrollment> enrollmentList = new ArrayList<>();
+     List<Enrollment> enrollmentList = new ArrayList<>();
 
     public void enrollStudent(int studentId, int courseId, String enrollmentDate) {
         int id = IdGenerator.getNextEnrollmentId();
@@ -25,30 +25,37 @@ public class EnrollmentService {
     }
 
     public void viewEnrollmentsByStudent(int studentId) {
-        boolean found = false;
 
         for (Enrollment e : enrollmentList) {
             if (e.getStudentId() == studentId) {
                 System.out.println("Enrollment ID: " + e.getId() + ", Course ID: " + e.getCourseId() + ", Status: " + e.getStatus());
-                found = true;
+                return;
             }
         }
 
-        if (!found) {
-            System.out.println("No enrollments found for student " + studentId);
-        }
+        System.out.println("No enrollments found for student " + studentId);
+
     }
 
     public void markCompleted(int enrollmentId) throws EntityNotFoundException {
         Enrollment e = findById(enrollmentId);
+
+        if( e.getStatus()==EnrollmentStatus.COMPLETED){
+            System.out.println("Enrollment already completed");
+            return;
+        }
         e.setStatus(EnrollmentStatus.COMPLETED);
-        System.out.println("Enrollment marked as COMPLETED");
+        System.out.println("Enrollment marked as completed");
     }
 
     public void markCancelled(int enrollmentId) throws EntityNotFoundException {
         Enrollment e = findById(enrollmentId);
+        if(e.getStatus()==EnrollmentStatus.CANCELLED){
+            System.out.println("Enrollment already cancelled");
+            return;
+        }
         e.setStatus(EnrollmentStatus.CANCELLED);
-        System.out.println("Enrollment marked as CANCELLED");
+        System.out.println("Enrollment marked as cancelled");
     }
 
 
