@@ -78,7 +78,12 @@ public class Main {
                     String email = InputValidator.readEmail(sc, "Enter email: ");
                     String batch = InputValidator.readNonEmptyString(sc, "Enter batch: ");
 
-                    service.addStudent(firstName, lastName, email, batch);
+                    if (email.isEmpty()) {
+                        service.addStudent(firstName, lastName,batch);
+                    } else {
+
+                        service.addStudent(firstName, lastName, email, batch);
+                    }
                     System.out.println(AppConstants.SUCCESS);
                     break;
 

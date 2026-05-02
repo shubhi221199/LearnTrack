@@ -3,6 +3,7 @@ package com.airtribe.learntrack.service;
 import com.airtribe.learntrack.entity.Course;
 import com.airtribe.learntrack.entity.Student;
 import com.airtribe.learntrack.exception.EntityNotFoundException;
+import com.airtribe.learntrack.repository.StudentRepository;
 import com.airtribe.learntrack.util.IdGenerator;
 
 import java.util.ArrayList;
@@ -10,26 +11,26 @@ import java.util.List;
 
 public class StudentService {
 
-    List<Student> students = new ArrayList<>();
+    private StudentRepository repository = new StudentRepository();
 
     public void addStudent(String firstName, String lastName, String email, String batch) {
         int id = IdGenerator.getNextStudentId();
         Student s = new Student(id, firstName, lastName, email, batch, true);
-        students.add(s);
+        repository.save(s);
 
     }
 
-    public void addStudent(String firstName, String lastName) {
-        // default values
-        String defaultEmail = "N/A";
-        String defaultBatch = "General";
-
-        addStudent(firstName, lastName, defaultEmail, defaultBatch);
+    //overloading
+    public void addStudent(String firstName, String lastName, String batch) {
+        // default values,
+        int id = IdGenerator.getNextStudentId();
+        Student s = new Student(id, firstName, lastName, batch);
+        repository.save(s);
     }
 
     public void removeStudent(int id) throws EntityNotFoundException {
         Student s = findStudentById(id);
-        students.remove(s);
+        repository.delete(s);
     }
 
     public void updateStudent(int id, String firstName, String lastName, String email, String batch, boolean active) throws EntityNotFoundException {
@@ -44,7 +45,7 @@ public class StudentService {
 
     public void statusChange(int id) {
 
-        for (Student c : students) {
+        for (Student c : repository.getAll()) {
             if (c.getId() == id) {
                 c.setActive(!c.isActive());
 
@@ -53,7 +54,7 @@ public class StudentService {
     }
 
     public Student findStudentById(int id) throws EntityNotFoundException {
-        for (Student s : students) {
+        for (Student s : repository.getAll()) {
             if (s.getId() == id) {
                 return s;
             }
@@ -62,12 +63,12 @@ public class StudentService {
     }
 
     public void listStudents() {
-        if (students.isEmpty()) {
+        if (repository.getAll().isEmpty()) {
             System.out.println("No students available");
             return;
         }
 
-        for (Student s : students) {
+        for (Student s : repository.getAll()) {
             System.out.println(s.getId() + " | " + s.getFirstName() + " " + s.getLastName() + " | " + s.getEmail() + " | " + s.getBatch() + " | " + s.isActive());
         }
     }
