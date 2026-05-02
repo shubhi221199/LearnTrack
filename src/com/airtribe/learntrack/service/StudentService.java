@@ -18,13 +18,13 @@ public class StudentService {
         students.add(s);
 
     }
-
+//overloading
     public void addStudent(String firstName, String lastName) {
         // default values
-        String defaultEmail = "N/A";
+        int id = IdGenerator.getNextStudentId();
         String defaultBatch = "General";
-
-        addStudent(firstName, lastName, defaultEmail, defaultBatch);
+        Student s = new Student(id, firstName, lastName, defaultBatch);
+        students.add(s);
     }
 
     public void removeStudent(int id) throws EntityNotFoundException {

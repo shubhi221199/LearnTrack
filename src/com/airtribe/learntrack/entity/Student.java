@@ -1,6 +1,8 @@
 package com.airtribe.learntrack.entity;
 
 
+import static com.airtribe.learntrack.constants.AppConstants.DEFAULT_ACTIVE;
+
 public class Student extends Person {
     //    static int id;
 //    private String firstName;
@@ -14,6 +16,12 @@ public class Student extends Person {
         super(id, firstName, lastName, email);
         this.batch = batch;
         this.active = active;
+    }
+
+    public Student(int id, String firstName, String lastName, String batch) {
+        super(id, firstName, lastName, "");
+        this.batch = batch;
+        this.active=DEFAULT_ACTIVE;
     }
 
     @Override

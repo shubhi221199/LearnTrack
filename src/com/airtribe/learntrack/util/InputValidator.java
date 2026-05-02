@@ -37,11 +37,48 @@ public class InputValidator {
             System.out.print(message);
             String email = sc.nextLine();
 
-            if (email.contains("@")) {
+            if (email.trim().isEmpty()) {
+                return "";
+            }
+
+            if (email.contains("@") && email.contains(".")) {
                 return email;
             }
 
             System.out.println("Invalid email format!");
         }
     }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
