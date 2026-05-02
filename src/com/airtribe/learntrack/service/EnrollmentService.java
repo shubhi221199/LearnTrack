@@ -3,6 +3,7 @@ package com.airtribe.learntrack.service;
 import com.airtribe.learntrack.entity.Enrollment;
 import com.airtribe.learntrack.enums.EnrollmentStatus;
 import com.airtribe.learntrack.exception.EntityNotFoundException;
+import com.airtribe.learntrack.repository.EnrollmentRepository;
 import com.airtribe.learntrack.util.IdGenerator;
 
 import java.util.ArrayList;
@@ -13,20 +14,20 @@ public class EnrollmentService {
 //    View enrollments for a student
 //    Mark enrollment as completed/cancelled
 
-     List<Enrollment> enrollmentList = new ArrayList<>();
+    EnrollmentRepository repository = new EnrollmentRepository();
 
     public void enrollStudent(int studentId, int courseId, String enrollmentDate) {
         int id = IdGenerator.getNextEnrollmentId();
 
         Enrollment e = new Enrollment(id, studentId, courseId, enrollmentDate, EnrollmentStatus.ACTIVE);
-        enrollmentList.add(e);
+        repository.save(e);
 
         System.out.println("Enrollment successful. ID: " + id);
     }
 
     public void viewEnrollmentsByStudent(int studentId) {
 
-        for (Enrollment e : enrollmentList) {
+        for (Enrollment e : repository.getAll()) {
             if (e.getStudentId() == studentId) {
                 System.out.println("Enrollment ID: " + e.getId() + ", Course ID: " + e.getCourseId() + ", Status: " + e.getStatus());
                 return;
@@ -40,7 +41,7 @@ public class EnrollmentService {
     public void markCompleted(int enrollmentId) throws EntityNotFoundException {
         Enrollment e = findById(enrollmentId);
 
-        if( e.getStatus()==EnrollmentStatus.COMPLETED){
+        if (e.getStatus() == EnrollmentStatus.COMPLETED) {
             System.out.println("Enrollment already completed");
             return;
         }
@@ -50,7 +51,7 @@ public class EnrollmentService {
 
     public void markCancelled(int enrollmentId) throws EntityNotFoundException {
         Enrollment e = findById(enrollmentId);
-        if(e.getStatus()==EnrollmentStatus.CANCELLED){
+        if (e.getStatus() == EnrollmentStatus.CANCELLED) {
             System.out.println("Enrollment already cancelled");
             return;
         }
@@ -60,7 +61,7 @@ public class EnrollmentService {
 
 
     private Enrollment findById(int id) throws EntityNotFoundException {
-        for (Enrollment e : enrollmentList) {
+        for (Enrollment e : repository.getAll()) {
             if (e.getId() == id) {
                 return e;
             }
