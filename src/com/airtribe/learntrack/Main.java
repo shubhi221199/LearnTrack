@@ -79,7 +79,7 @@ public class Main {
                     String batch = InputValidator.readNonEmptyString(sc, "Enter batch: ");
 
                     if (email.isEmpty()) {
-                        service.addStudent(firstName, lastName);
+                        service.addStudent(firstName, lastName,batch);
                     } else {
 
                         service.addStudent(firstName, lastName, email, batch);
